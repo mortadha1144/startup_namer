@@ -39,7 +39,18 @@ class _RandomWordsState extends State<RandomWords> {
 
   @override
   Widget build(BuildContext context) {
-    final wordPair = WordPair.random();
-    return Text(wordPair.asPascalCase);
+    //final wordPair = WordPair.random();
+    return ListView.builder(itemBuilder: (context, i) {
+      if (i.isOdd) return const Divider();
+      final index = i ~/ 2;
+      if (index >= _suggestions.length) {
+        _suggestions.addAll(generateWordPairs().take(1));
+      }
+      return ListTile(
+          title: Text(
+        _suggestions[index].asPascalCase,
+        style: _biggerFont,
+      ));
+    });
   }
 }
